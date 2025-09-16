@@ -34,8 +34,8 @@ public class WorkerController {
     @PostMapping("/registerWorker")
     public ResponseEntity<ApiResponse<WorkerDTO>> registerWorker(@Valid @RequestBody WorkerDTO dto) {
         WorkerDTO workers = workerService.addWorker(dto);
-        ApiResponse<WorkerDTO> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "Worker saved successfully");
-        return ResponseEntity.ok(response);
+        ApiResponse<WorkerDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(), workers, "Worker saved successfully");
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/updateWorker/{id}")

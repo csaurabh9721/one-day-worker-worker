@@ -3,8 +3,6 @@ package com.worker_service.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,18 +16,11 @@ public class Worker {
     private String name;
     private Integer age;
     private String photo;
-    @Column(length = 15, unique = true)
+    @Column(length = 15, unique = true, nullable = false)
     private String mobile;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "worker", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     private Address address;
-
     @OneToMany(mappedBy = "worker", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     private List<WorkerSkill> skills = new ArrayList<>();
 }

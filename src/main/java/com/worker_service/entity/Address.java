@@ -3,8 +3,6 @@ package com.worker_service.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 @Entity
 @Data
@@ -19,10 +17,8 @@ public class Address {
     private String state;
     private String country;
     private Integer pinCode;
-
-    @OneToOne(mappedBy = "address")
+    @OneToOne
+    @JoinColumn(name = "worker_id", nullable = false)
     @JsonBackReference
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     private Worker worker;
 }

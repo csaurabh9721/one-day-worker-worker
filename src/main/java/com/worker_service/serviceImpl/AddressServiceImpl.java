@@ -1,7 +1,6 @@
 package com.worker_service.serviceImpl;
 
 import com.worker_service.dto.AddressDTO;
-import com.worker_service.dto.WorkerDTO;
 import com.worker_service.entity.Address;
 import com.worker_service.entity.Worker;
 import com.worker_service.globleException.WorkerNotFoundException;
@@ -28,35 +27,27 @@ public class AddressServiceImpl implements AddressService {
         return workers.stream().map(this::convertToDto).toList();
     }
 
+    @Override
+    public AddressDTO getAddressesByUserId(Long workerId) {
+        Address address = repository.findByWorkerId(workerId);
+        return convertToDto(address);
+    }
 
     @Override
     @Transactional
-    public WorkerDTO saveAddress(Long workerId, AddressDTO dto) {
+    public AddressDTO saveAddress(Long workerId, AddressDTO dto) {
         Worker workerEntity = workerRepository.findById(workerId)
                 .orElseThrow(() -> new WorkerNotFoundException("worker", workerId));
-        if(workerEntity.getAddress() == null){
-            Address addressEntity = convertToEntity(dto);
+        Address addressEntity = workerEntity.getAddress();
+        if (addressEntity == null) {
+            addressEntity = convertToEntity(dto);
             addressEntity.setWorker(workerEntity);
-            Address savedAddress = repository.save(addressEntity);
-            workerEntity.setAddress(savedAddress);
-            workerRepository.save(workerEntity);
-        }else {
-            Address addressEntity = workerEntity.getAddress();
-            addressEntity.setStreetName(dto.getStreetName());
-            addressEntity.setSubLocality(dto.getSubLocality());
-            addressEntity.setLocality(dto.getLocality());
-            addressEntity.setCity(dto.getCity());
-            addressEntity.setState(dto.getState());
-            addressEntity.setCountry(dto.getCountry());
-            addressEntity.setPinCode(dto.getPinCode());
-            Address savedAddress = repository.save(addressEntity);
-            workerEntity.setAddress(savedAddress);
-            workerRepository.save(workerEntity);
+        } else {
+            modelMapper.map(dto, addressEntity);
         }
-
-        return modelMapper.map(workerEntity, WorkerDTO.class);
+        Address savedAddress = repository.save(addressEntity);
+        return modelMapper.map(savedAddress, AddressDTO.class);
     }
-
 
 
     public AddressDTO convertToDto(Address workerEntity) {

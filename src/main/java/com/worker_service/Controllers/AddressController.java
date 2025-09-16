@@ -2,7 +2,6 @@ package com.worker_service.Controllers;
 
 import com.worker_service.dto.AddressDTO;
 import com.worker_service.dto.ApiResponse;
-import com.worker_service.dto.WorkerDTO;
 import com.worker_service.service.AddressService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -18,18 +17,24 @@ import java.util.List;
 public class AddressController {
     private AddressService addressService;
 
-    @GetMapping("/get")
-    public ResponseEntity<ApiResponse<List<AddressDTO>>> getAllworkers() {
+    @GetMapping("/getAllAddress")
+    public ResponseEntity<ApiResponse<List<AddressDTO>>> getAllAddress() {
         List<AddressDTO> workers = addressService.getAddresses();
         ApiResponse<List<AddressDTO>> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "Address fetched successfully");
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/save/{id}")
-    public ResponseEntity<ApiResponse<WorkerDTO>> addworker(@Valid @PathVariable Long id,@Valid @RequestBody AddressDTO dto) {
+    @GetMapping("/getAddressesByUserId/{id}")
+    public ResponseEntity<ApiResponse<AddressDTO>> getAddressesByUserId(@PathVariable Long workerId) {
+        AddressDTO workers = addressService.getAddressesByUserId(workerId);
+        ApiResponse<AddressDTO> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "Address fetched successfully");
+        return ResponseEntity.ok(response);
+    }
 
-        WorkerDTO workers = addressService.saveAddress(id, dto);
-        ApiResponse<WorkerDTO> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "Address saved successfully");
+    @PostMapping("/saveAddress/{id}")
+    public ResponseEntity<ApiResponse<AddressDTO>> saveAddress(@Valid @PathVariable Long id, @Valid @RequestBody AddressDTO dto) {
+        AddressDTO address = addressService.saveAddress(id, dto);
+        ApiResponse<AddressDTO> response = new ApiResponse<>(HttpStatus.OK.value(), address, "Address saved successfully");
         return ResponseEntity.ok(response);
     }
 
