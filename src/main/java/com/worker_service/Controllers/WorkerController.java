@@ -17,38 +17,38 @@ import java.util.List;
 public class WorkerController {
     private WorkerService workerService;
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/getWorkerById/{id}")
     public ResponseEntity<ApiResponse<WorkerDTO>> getWorkerById(@PathVariable Long id) {
         WorkerDTO workers = workerService.getWorkerById(id);
         ApiResponse<WorkerDTO> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "worker fetched successfully");
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/get")
+    @GetMapping("/getAllWorkers")
     public ResponseEntity<ApiResponse<List<WorkerDTO>>> getAllWorkers() {
         List<WorkerDTO> workers = workerService.getWorkers();
         ApiResponse<List<WorkerDTO>> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "worker fetched successfully");
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<ApiResponse<WorkerDTO>> addWorker(@Valid @RequestBody WorkerDTO dto) {
+    @PostMapping("/registerWorker")
+    public ResponseEntity<ApiResponse<WorkerDTO>> registerWorker(@Valid @RequestBody WorkerDTO dto) {
         WorkerDTO workers = workerService.addWorker(dto);
-        ApiResponse<WorkerDTO> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "worker saved successfully");
+        ApiResponse<WorkerDTO> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "Worker saved successfully");
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/updateWorker/{id}")
     public ResponseEntity<ApiResponse<WorkerDTO>> updateWorker(@Valid @PathVariable Long id, @RequestBody WorkerDTO dto) {
         WorkerDTO workers = workerService.updateWorker(id, dto);
-        ApiResponse<WorkerDTO> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "worker updated successfully");
+        ApiResponse<WorkerDTO> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "Worker updated successfully");
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ApiResponse<Boolean>> deleteworker(@PathVariable Long id) {
+    @DeleteMapping("/deleteWorker/{id}")
+    public ResponseEntity<ApiResponse<Boolean>> deleteWorker(@PathVariable Long id) {
         boolean deleted = workerService.deleteWorkerById(id);
-        ApiResponse<Boolean> response = new ApiResponse<>(HttpStatus.OK.value(), deleted, "worker deleted successfully");
+        ApiResponse<Boolean> response = new ApiResponse<>(HttpStatus.OK.value(), deleted, "Worker deleted successfully");
         return ResponseEntity.ok(response);
     }
 }
