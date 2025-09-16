@@ -16,7 +16,7 @@ public class AddressDTO {
     private String locality;
 
     @NotBlank(message = "Sub-locality is required")
-    private String sublocality;
+    private String subLocality;
 
     @NotBlank(message = "City is required")
     @Size(min = 1, max = 50, message = "City length must be between 1 and 50")

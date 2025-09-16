@@ -45,7 +45,7 @@ public class WorkerServiceImpl implements WorkerService {
         existingWorker.setAge(dto.getAge());
         existingWorker.setMobile(dto.getMobile());
         existingWorker.setPhoto(dto.getPhoto());
-        existingWorker.setAddress(existingWorker.getAddress());
+       // existingWorker.setAddress(existingWorker.getAddress());
         Worker savedWorker = repository.save(existingWorker);
         return convertToDto(savedWorker);
     }

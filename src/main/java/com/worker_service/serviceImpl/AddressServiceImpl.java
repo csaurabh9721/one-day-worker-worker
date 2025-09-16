@@ -43,7 +43,7 @@ public class AddressServiceImpl implements AddressService {
         }else {
             Address addressEntity = workerEntity.getAddress();
             addressEntity.setStreetName(dto.getStreetName());
-            addressEntity.setSublocality(dto.getSublocality());
+            addressEntity.setSubLocality(dto.getSubLocality());
             addressEntity.setLocality(dto.getLocality());
             addressEntity.setCity(dto.getCity());
             addressEntity.setState(dto.getState());
