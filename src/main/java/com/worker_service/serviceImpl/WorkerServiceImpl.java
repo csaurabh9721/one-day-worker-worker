@@ -40,39 +40,54 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     @Override
-    @Transactional
     public WorkerDetailsDto getWorkerDetailById(Long id) {
         Worker worker = repository.findById(id).orElseThrow(() -> new WorkerNotFoundException("worker", id));
         WorkerDetailsDto details = modelMapper.map(worker, WorkerDetailsDto.class);
-        /// Services communicate using Rest templates
-        String url = "http://RATING-SERVICE/ratingApi/ratings/getRatingsByReceiverId/" + worker.getId();
-        ResponseEntity<ApiResponse<List<RatingDTO>>> response =
-                restTemplate.exchange(
-                        url,
-                        HttpMethod.GET,
-                        null,
-                        new ParameterizedTypeReference<>() {
-                        }
-                );
-        ApiResponse<List<RatingDTO>> apiResponse = response.getBody();
-        List<RatingDTO> ratingList;
-        if (apiResponse != null && apiResponse.getData() != null) {
-            ratingList = apiResponse.getData();
-        } else {
-            ratingList = Collections.emptyList();
-            details.setRatingList(ratingList);
-            return details;
-        }
-        List<RatingDTO> returRatingList = ratingList.stream().peek(rating -> {
-            /// Services communicate using Feign Client
-            ApiResponse<UsersDTO> userResponse = userFeignService.users(rating.getGiverId().toString());
-            if (userResponse != null && userResponse.getData() != null) {
-                rating.setUser(userResponse.getData());
-            }
-        }).toList();
-
+        List<RatingDTO> returRatingList = getRatings(worker.getId());
         details.setRatingList(returRatingList);
         return details;
+    }
+
+    /// Services communicate using Rest templates
+    private List<RatingDTO> getRatings(Long workerId) {
+        try {
+            String url = "http://RATING-SERVICE/ratingApi/ratings/getRatingsByReceiverId/" + workerId;
+            ResponseEntity<ApiResponse<List<RatingDTO>>> response =
+                    restTemplate.exchange(
+                            url,
+                            HttpMethod.GET,
+                            null,
+                            new ParameterizedTypeReference<>() {
+                            }
+                    );
+            ApiResponse<List<RatingDTO>> apiResponse = response.getBody();
+            List<RatingDTO> ratingList;
+            if (apiResponse != null && apiResponse.getData() != null) {
+                ratingList = apiResponse.getData();
+            } else {
+                return Collections.emptyList();
+            }
+            return ratingList.stream().peek(rating -> {
+                UsersDTO user = getUSer(rating.getGiverId());
+                rating.setUser(user);
+            }).toList();
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
+    }
+
+    /// Services communicate using Feign Client
+    private UsersDTO getUSer(Long userId) {
+        try {
+            ApiResponse<UsersDTO> response = userFeignService.users(userId.toString());
+            if (response != null && response.getData() != null) {
+                return response.getData();
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
