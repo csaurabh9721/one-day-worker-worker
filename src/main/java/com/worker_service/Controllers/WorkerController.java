@@ -2,6 +2,7 @@ package com.worker_service.Controllers;
 
 import com.worker_service.dto.ApiResponse;
 import com.worker_service.dto.WorkerDTO;
+import com.worker_service.dto.WorkerDetailsDto;
 import com.worker_service.service.WorkerService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -20,14 +21,21 @@ public class WorkerController {
     @GetMapping("/getWorkerById/{id}")
     public ResponseEntity<ApiResponse<WorkerDTO>> getWorkerById(@PathVariable Long id) {
         WorkerDTO workers = workerService.getWorkerById(id);
-        ApiResponse<WorkerDTO> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "worker fetched successfully");
+        ApiResponse<WorkerDTO> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "Worker fetched successfully");
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/getWorkerDetailById/{id}")
+    public ResponseEntity<ApiResponse<WorkerDetailsDto>> getWorkerDetailById(@PathVariable Long id) {
+        WorkerDetailsDto workers = workerService.getWorkerDetailById(id);
+        ApiResponse<WorkerDetailsDto> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "Worker  detail fetched successfully");
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/getAllWorkers")
     public ResponseEntity<ApiResponse<List<WorkerDTO>>> getAllWorkers() {
         List<WorkerDTO> workers = workerService.getWorkers();
-        ApiResponse<List<WorkerDTO>> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "worker fetched successfully");
+        ApiResponse<List<WorkerDTO>> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "Worker fetched successfully");
         return ResponseEntity.ok(response);
     }
 

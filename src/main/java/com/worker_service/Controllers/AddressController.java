@@ -24,7 +24,7 @@ public class AddressController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/getAddressesByWorkerIdId/{id}")
+    @GetMapping("/getAddressesByWorkerId/{id}")
     public ResponseEntity<ApiResponse<AddressDTO>> getAddressesByWorkerId(@PathVariable Long workerId) {
         AddressDTO workers = addressService.getAddressesByUserId(workerId);
         ApiResponse<AddressDTO> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "Address fetched successfully");
