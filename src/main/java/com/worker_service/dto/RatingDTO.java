@@ -15,5 +15,6 @@ public class RatingDTO {
     private String comment;
     private String createdAt;
     private String updatedAt;
+    private UsersDTO user;
 
 }

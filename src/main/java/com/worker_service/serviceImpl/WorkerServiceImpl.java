@@ -1,9 +1,6 @@
 package com.worker_service.serviceImpl;
 
-import com.worker_service.dto.ApiResponse;
-import com.worker_service.dto.RatingDTO;
-import com.worker_service.dto.WorkerDTO;
-import com.worker_service.dto.WorkerDetailsDto;
+import com.worker_service.dto.*;
 import com.worker_service.entity.Worker;
 import com.worker_service.globleException.WorkerNotFoundException;
 import com.worker_service.repository.WorkerRepository;
@@ -18,7 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -27,6 +25,7 @@ public class WorkerServiceImpl implements WorkerService {
     private final WorkerRepository repository;
     private final ModelMapper modelMapper;
     private final RestTemplate restTemplate;
+    private final UserFeignService userFeignService;
 
     @Override
     public List<WorkerDTO> getWorkers() {
@@ -45,23 +44,34 @@ public class WorkerServiceImpl implements WorkerService {
     public WorkerDetailsDto getWorkerDetailById(Long id) {
         Worker worker = repository.findById(id).orElseThrow(() -> new WorkerNotFoundException("worker", id));
         WorkerDetailsDto details = modelMapper.map(worker, WorkerDetailsDto.class);
-        log.info("➡️ Calling external API-URL: {}", "http://localhost:8083/ratingApi/ratings/getRatingsByReceiverId/"+worker.getId());
-
-        String url = "http://localhost:8083/ratingApi/ratings/getRatingsByReceiverId/"+worker.getId();
-
+        /// Services communicate using Rest templates
+        String url = "http://RATING-SERVICE/ratingApi/ratings/getRatingsByReceiverId/" + worker.getId();
         ResponseEntity<ApiResponse<List<RatingDTO>>> response =
                 restTemplate.exchange(
                         url,
                         HttpMethod.GET,
                         null,
-                        new ParameterizedTypeReference<ApiResponse<List<RatingDTO>>>() {}
+                        new ParameterizedTypeReference<>() {
+                        }
                 );
         ApiResponse<List<RatingDTO>> apiResponse = response.getBody();
+        List<RatingDTO> ratingList;
         if (apiResponse != null && apiResponse.getData() != null) {
-            details.setRatingList(apiResponse.getData());
+            ratingList = apiResponse.getData();
         } else {
-            details.setRatingList(Collections.emptyList());
+            ratingList = Collections.emptyList();
+            details.setRatingList(ratingList);
+            return details;
         }
+        List<RatingDTO> returRatingList = ratingList.stream().peek(rating -> {
+            /// Services communicate using Feign Client
+            ApiResponse<UsersDTO> userResponse = userFeignService.users(rating.getGiverId().toString());
+            if (userResponse != null && userResponse.getData() != null) {
+                rating.setUser(userResponse.getData());
+            }
+        }).toList();
+
+        details.setRatingList(returRatingList);
         return details;
     }
 
