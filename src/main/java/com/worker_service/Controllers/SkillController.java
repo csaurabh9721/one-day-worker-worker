@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/skills")
+@RequestMapping("/workerApi/skills")
 public class SkillController {
 
     private final SkillService skillService;
@@ -29,8 +29,8 @@ public class SkillController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/addSkill/{workerId}")
-    public ResponseEntity<ApiResponse<SkillResponseDto>> addSkill(
+    @PostMapping("/addSkillByWorkerId/{workerId}")
+    public ResponseEntity<ApiResponse<SkillResponseDto>> addSkillByWorkerId(
             @PathVariable Long workerId,
             @RequestBody SkillPayloadDto dto) {
         SkillResponseDto savedSkill = skillService.saveWorkerSkill(workerId, dto);
@@ -39,8 +39,8 @@ public class SkillController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping("/updateSkill/{skillId}")
-    public ResponseEntity<ApiResponse<SkillResponseDto>> updateSkill(
+    @PutMapping("/updateSkillBySkillId/{skillId}")
+    public ResponseEntity<ApiResponse<SkillResponseDto>> updateSkillBySkillId(
             @PathVariable Long skillId,
             @RequestBody SkillPayloadDto dto) {
         SkillResponseDto updatedSkill = skillService.updateWorkerSkill(skillId, dto);
@@ -49,8 +49,8 @@ public class SkillController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/deleteSkill/{skillId}")
-    public ResponseEntity<ApiResponse<Boolean>> deleteSkill(@PathVariable Long skillId) {
+    @DeleteMapping("/deleteSkillBySkillId/{skillId}")
+    public ResponseEntity<ApiResponse<Boolean>> deleteSkillBySkillId(@PathVariable Long skillId) {
         Boolean deleted = skillService.deleteWorkerSkillBySkillId(skillId);
         ApiResponse<Boolean> response =
                 new ApiResponse<>(HttpStatus.OK.value(), deleted, "Skill deleted successfully");

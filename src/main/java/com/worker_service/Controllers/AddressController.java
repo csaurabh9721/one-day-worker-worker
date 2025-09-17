@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/address")
+@RequestMapping("/workerApi/address")
 @AllArgsConstructor
 public class AddressController {
     private AddressService addressService;
@@ -24,15 +24,15 @@ public class AddressController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/getAddressesByUserId/{id}")
-    public ResponseEntity<ApiResponse<AddressDTO>> getAddressesByUserId(@PathVariable Long workerId) {
+    @GetMapping("/getAddressesByWorkerIdId/{id}")
+    public ResponseEntity<ApiResponse<AddressDTO>> getAddressesByWorkerId(@PathVariable Long workerId) {
         AddressDTO workers = addressService.getAddressesByUserId(workerId);
         ApiResponse<AddressDTO> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "Address fetched successfully");
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/saveAddress/{id}")
-    public ResponseEntity<ApiResponse<AddressDTO>> saveAddress(@Valid @PathVariable Long id, @Valid @RequestBody AddressDTO dto) {
+    @PostMapping("/saveAddressByWorkerId/{id}")
+    public ResponseEntity<ApiResponse<AddressDTO>> saveAddressByWorkerId(@Valid @PathVariable Long id, @Valid @RequestBody AddressDTO dto) {
         AddressDTO address = addressService.saveAddress(id, dto);
         ApiResponse<AddressDTO> response = new ApiResponse<>(HttpStatus.OK.value(), address, "Address saved successfully");
         return ResponseEntity.ok(response);
