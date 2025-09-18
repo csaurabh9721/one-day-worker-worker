@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/workerApi/subCategory")
+@RequestMapping("/workerService/subCategory")
 public class SubCategoryController {
     private final SubCategoryService service;
 

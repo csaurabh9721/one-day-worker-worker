@@ -1,4 +1,4 @@
-package com.worker_service.serviceImpl;
+package com.worker_service.service;
 
 import com.worker_service.dto.ApiResponse;
 import com.worker_service.dto.UsersDTO;

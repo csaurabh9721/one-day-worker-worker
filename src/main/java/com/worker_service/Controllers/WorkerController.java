@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/workerApi/worker")
+@RequestMapping("/workerService/worker")
 @AllArgsConstructor
 public class WorkerController {
     private WorkerService workerService;
