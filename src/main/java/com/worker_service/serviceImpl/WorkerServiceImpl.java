@@ -51,7 +51,7 @@ public class WorkerServiceImpl implements WorkerService {
     /// Services communicate using Rest templates
     private List<RatingDTO> getRatings(Long workerId) {
         try {
-            String url = "http://RATING-SERVICE/ratingApi/ratings/getRatingsByReceiverId/" + workerId;
+            String url = "http://RATING-SERVICE/ratingService/ratings/getRatingsByReceiverId/" + workerId;
             ResponseEntity<ApiResponse<List<RatingDTO>>> response =
                     restTemplate.exchange(
                             url,
@@ -86,6 +86,7 @@ public class WorkerServiceImpl implements WorkerService {
                 return null;
             }
         } catch (Exception e) {
+            log.info(e.toString());
             return null;
         }
     }
