@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -58,5 +59,21 @@ public class WorkerController {
         boolean deleted = workerService.deleteWorkerById(id);
         ApiResponse<Boolean> response = new ApiResponse<>(HttpStatus.OK.value(), deleted, "Worker deleted successfully");
         return ResponseEntity.ok(response);
+    }
+
+
+    @PostMapping("/{id}/upload-pic")
+    public ResponseEntity<ApiResponse<String>> uploadProfilePic(
+            @PathVariable Long id,
+            @RequestParam("file") MultipartFile file) {
+        try {
+            String url = workerService.saveUserProfilePic(id, file);
+            ApiResponse<String> response = new ApiResponse<>(HttpStatus.OK.value(), "Profile pic uploaded: " + url, "Pic uploaded successfully");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            ApiResponse<String> response = new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Failed", "Pic uploaded failed");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(response);
+        }
     }
 }

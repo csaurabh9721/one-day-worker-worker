@@ -1,6 +1,9 @@
 spring:
   application:
     name: Worker-Service
+  web:
+    resources:
+      static-locations: file:uploads/
 
   datasource:
     url: jdbc:mysql://localhost:3306/worker_service

@@ -14,7 +14,13 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 
@@ -118,6 +124,28 @@ public class WorkerServiceImpl implements WorkerService {
         repository.deleteById(id);
         return true;
     }
+
+
+    public String saveUserProfilePic(Long id, MultipartFile file) {
+         final String uploadDir = "uploads/";
+        Worker worker = repository.findById(id).orElseThrow(() -> new WorkerNotFoundException("worker", id));
+        File dir = new File(uploadDir);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        String fileName = id + "_" + file.getOriginalFilename();
+        Path path = Paths.get(uploadDir + fileName);
+        try {
+            Files.write(path, file.getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        String fileUrl = "/uploads/" + fileName;
+        worker.setPhoto(fileUrl);
+        repository.save(worker);
+        return fileUrl;
+    }
+
 
     public WorkerDTO convertToDto(Worker workerEntity) {
         return modelMapper.map(workerEntity, WorkerDTO.class);
