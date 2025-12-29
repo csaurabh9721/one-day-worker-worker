@@ -1,21 +1,22 @@
 package com.worker_service.service;
 
-import com.worker_service.dto.WorkerDTO;
+import com.worker_service.dto.SaveWorkerDto;
+import com.worker_service.dto.WorkerReturnDTO;
 import com.worker_service.dto.WorkerDetailsDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface WorkerService {
-    List<WorkerDTO> getWorkers();
+    List<WorkerReturnDTO> getWorkers();
 
-    WorkerDTO getWorkerById(Long id);
+    WorkerReturnDTO getWorkerById(Long id);
 
     WorkerDetailsDto getWorkerDetailById(Long id);
 
-    WorkerDTO addWorker(WorkerDTO dto);
+    WorkerReturnDTO addWorker(SaveWorkerDto dto);
 
-    WorkerDTO updateWorker(Long id, WorkerDTO dto);
+    WorkerReturnDTO updateWorker(Long id, WorkerReturnDTO dto);
 
     boolean deleteWorkerById(Long id);
     String saveUserProfilePic(Long id, MultipartFile file) ;

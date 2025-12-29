@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class WorkerDTO {
+public class WorkerReturnDTO {
     private Long id;
 
     @NotBlank(message = "Name is required")

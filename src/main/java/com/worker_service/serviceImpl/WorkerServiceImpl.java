@@ -34,13 +34,13 @@ public class WorkerServiceImpl implements WorkerService {
     private final UserFeignService userFeignService;
 
     @Override
-    public List<WorkerDTO> getWorkers() {
+    public List<WorkerReturnDTO> getWorkers() {
         List<Worker> workers = repository.findAll();
         return workers.stream().map(this::convertToDto).toList();
     }
 
     @Override
-    public WorkerDTO getWorkerById(Long id) {
+    public WorkerReturnDTO getWorkerById(Long id) {
         Worker worker = repository.findById(id).orElseThrow(() -> new WorkerNotFoundException("worker", id));
         return convertToDto(worker);
     }
@@ -98,14 +98,14 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     @Override
-    public WorkerDTO addWorker(WorkerDTO dto) {
+    public WorkerReturnDTO addWorker(SaveWorkerDto dto) {
         Worker workers = convertToEntity(dto);
         Worker savedWorker = repository.save(workers);
         return convertToDto(savedWorker);
     }
 
     @Override
-    public WorkerDTO updateWorker(Long id, WorkerDTO dto) {
+    public WorkerReturnDTO updateWorker(Long id, WorkerReturnDTO dto) {
         Worker existingWorker = repository.findById(id)
                 .orElseThrow(() -> new WorkerNotFoundException("worker", id));
 
@@ -147,11 +147,11 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
 
-    public WorkerDTO convertToDto(Worker workerEntity) {
-        return modelMapper.map(workerEntity, WorkerDTO.class);
+    public WorkerReturnDTO convertToDto(Worker workerEntity) {
+        return modelMapper.map(workerEntity, WorkerReturnDTO.class);
     }
 
-    public Worker convertToEntity(WorkerDTO workerDto) {
+    public Worker convertToEntity(SaveWorkerDto workerDto) {
         return modelMapper.map(workerDto, Worker.class);
     }
 
