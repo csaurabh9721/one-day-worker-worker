@@ -1,6 +1,7 @@
 spring:
   application:
     name: Worker-Service
+
   web:
     resources:
       static-locations: file:uploads/
@@ -8,8 +9,8 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/worker_service
     username: root
-    #password: 972114@Ss
     password: root9721
+
 
   jpa:
     hibernate:
@@ -17,16 +18,60 @@ spring:
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
 
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
 server:
   port: 8082
 
+# ==========================
+# Eureka Configuration
+# ==========================
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8080/eureka/
-      fetch-registry: true
-      registry-with-eureka: true
+    fetch-registry: true
+    register-with-eureka: true
   instance:
-   prefer-ip-address: true
+    prefer-ip-address: true
 
+# ==========================
+# Actuator Configuration
+# ==========================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,circuitbreakers,circuitbreakerevents
+
+  endpoint:
+    health:
+      show-details: always
+
+  health:
+    circuitbreakers:
+      enabled: true
+
+# ==========================
+# Resilience4j Circuit Breaker
+# ==========================
+resilience4j:
+  circuitbreaker:
+    instances:
+      Rating-Service:
+        registerHealthIndicator: true
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+
+      User-Service:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
 
