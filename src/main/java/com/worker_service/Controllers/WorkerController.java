@@ -1,7 +1,8 @@
 package com.worker_service.Controllers;
 
 import com.worker_service.dto.ApiResponse;
-import com.worker_service.dto.WorkerDTO;
+import com.worker_service.dto.SaveWorkerDto;
+import com.worker_service.dto.WorkerReturnDTO;
 import com.worker_service.dto.WorkerDetailsDto;
 import com.worker_service.service.WorkerService;
 import jakarta.validation.Valid;
@@ -20,9 +21,9 @@ public class WorkerController {
     private WorkerService workerService;
 
     @GetMapping("/getWorkerById/{id}")
-    public ResponseEntity<ApiResponse<WorkerDTO>> getWorkerById(@PathVariable Long id) {
-        WorkerDTO workers = workerService.getWorkerById(id);
-        ApiResponse<WorkerDTO> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "Worker fetched successfully");
+    public ResponseEntity<ApiResponse<WorkerReturnDTO>> getWorkerById(@PathVariable Long id) {
+        WorkerReturnDTO workers = workerService.getWorkerById(id);
+        ApiResponse<WorkerReturnDTO> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "Worker fetched successfully");
         return ResponseEntity.ok(response);
     }
 
@@ -34,23 +35,23 @@ public class WorkerController {
     }
 
     @GetMapping("/getAllWorkers")
-    public ResponseEntity<ApiResponse<List<WorkerDTO>>> getAllWorkers() {
-        List<WorkerDTO> workers = workerService.getWorkers();
-        ApiResponse<List<WorkerDTO>> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "Worker fetched successfully");
+    public ResponseEntity<ApiResponse<List<WorkerReturnDTO>>> getAllWorkers() {
+        List<WorkerReturnDTO> workers = workerService.getWorkers();
+        ApiResponse<List<WorkerReturnDTO>> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "Worker fetched successfully");
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/registerWorker")
-    public ResponseEntity<ApiResponse<WorkerDTO>> registerWorker(@Valid @RequestBody WorkerDTO dto) {
-        WorkerDTO workers = workerService.addWorker(dto);
-        ApiResponse<WorkerDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(), workers, "Worker saved successfully");
+    public ResponseEntity<ApiResponse<WorkerReturnDTO>> registerWorker(@Valid @RequestBody SaveWorkerDto dto) {
+        WorkerReturnDTO workers = workerService.addWorker(dto);
+        ApiResponse<WorkerReturnDTO> response = new ApiResponse<>(HttpStatus.CREATED.value(), workers, "Worker saved successfully");
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/updateWorker/{id}")
-    public ResponseEntity<ApiResponse<WorkerDTO>> updateWorker(@Valid @PathVariable Long id, @RequestBody WorkerDTO dto) {
-        WorkerDTO workers = workerService.updateWorker(id, dto);
-        ApiResponse<WorkerDTO> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "Worker updated successfully");
+    public ResponseEntity<ApiResponse<WorkerReturnDTO>> updateWorker(@Valid @PathVariable Long id, @RequestBody WorkerReturnDTO dto) {
+        WorkerReturnDTO workers = workerService.updateWorker(id, dto);
+        ApiResponse<WorkerReturnDTO> response = new ApiResponse<>(HttpStatus.OK.value(), workers, "Worker updated successfully");
         return ResponseEntity.ok(response);
     }
 

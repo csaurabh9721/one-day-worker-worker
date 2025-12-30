@@ -13,6 +13,7 @@ public class Worker {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String password;
     private String name;
     private Integer age;
     private String photo;

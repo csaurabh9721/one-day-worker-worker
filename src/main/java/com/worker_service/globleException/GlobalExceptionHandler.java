@@ -2,6 +2,7 @@ package com.worker_service.globleException;
 
 import com.worker_service.dto.ApiResponse;
 import com.worker_service.globleException.WorkerNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -34,5 +35,13 @@ public class GlobalExceptionHandler {
         ApiResponse<String> response = new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage(), "Something went wrong");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
-
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ApiResponse<String>> handleDuplicateEntry(DataIntegrityViolationException ex) {
+        String message = "Something went wrong";
+        if (ex.getMessage() != null && ex.getMessage().contains("Duplicate entry")) {
+            message = "Mobile number already register.";
+        }
+        ApiResponse<String> response = new ApiResponse<>(HttpStatus.BAD_REQUEST.value(), message, "Failed to register");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }
