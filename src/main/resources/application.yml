@@ -7,9 +7,9 @@ spring:
       static-locations: file:uploads/
 
   datasource:
-    url: jdbc:mysql://mysql:3306/worker_service
-    username: root
-    password: root9721
+    url: jdbc:mysql://host.docker.internal:3306/worker_service
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
 
   jpa:
@@ -26,7 +26,7 @@ spring:
         enabled: true
 
 server:
-  port: 8083
+  port: ${SERVER_PORT:8082}
 
 # ==========================
 # Eureka Configuration
@@ -34,7 +34,7 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka-server:8080/eureka/
+      defaultZone: http://eureka-server:8761/eureka/
     fetch-registry: true
     register-with-eureka: true
   instance:
