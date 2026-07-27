@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.worker_service</groupId>
-	<artifactId>worker-service</artifactId>
+	<artifactId>worker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Worker Service</name>
 	<description>This is the Worker microservice for One-Day-Worker backend</description>
