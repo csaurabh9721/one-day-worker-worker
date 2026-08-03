@@ -24,20 +24,10 @@ public class WorkerController {
     @PostMapping
     public ResponseEntity<WorkerResponse> createWorker(
             @Valid @RequestBody WorkerCreateRequest request) {
-
-        /*
-         * In your real application, identityId should come
-         * from the authenticated JWT, not from request body.
-         *
-         * Replace this with your SecurityContext/JWT extraction.
-         */
-        Long identityId = getCurrentIdentityId();
-
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(workerService.createWorker(
-                        request,
-                        identityId
+                        request
                 ));
     }
 

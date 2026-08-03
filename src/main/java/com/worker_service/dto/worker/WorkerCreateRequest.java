@@ -6,7 +6,8 @@ import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 public record WorkerCreateRequest(
-
+        @NotNull
+        Long identityId,
         @NotBlank
         @Size(max = 100)
         String firstName,
@@ -15,23 +16,9 @@ public record WorkerCreateRequest(
         @Size(max = 100)
         String lastName,
 
-        @Email
-        @Size(max = 150)
-        String email,
-
         @Pattern(regexp = "^[0-9]{10}$")
-        String phone,
+        @Size(min = 10, max = 20, message = "Phone number must be between 10 and 20 digits")
+        String phone
 
-        Gender gender,
-
-        @Past
-        LocalDate dateOfBirth,
-
-        @Min(0)
-        @Max(60)
-        Integer experienceYears,
-
-        @Size(max = 500)
-        String profileImageUrl
-) {
+        ) {
 }

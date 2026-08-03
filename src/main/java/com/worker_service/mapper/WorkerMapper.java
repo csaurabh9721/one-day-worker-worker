@@ -17,10 +17,9 @@ public class WorkerMapper {
         }
 
         Worker worker = new Worker();
-
+        worker.setIdentityId(request.identityId());
         worker.setFirstName(request.firstName());
         worker.setLastName(request.lastName());
-        worker.setEmail(request.email());
         worker.setPhone(request.phone());
 
         return worker;

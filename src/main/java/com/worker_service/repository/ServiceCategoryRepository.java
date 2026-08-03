@@ -10,8 +10,6 @@ import java.util.Optional;
 public interface ServiceCategoryRepository
         extends JpaRepository<ServiceCategory, Long> {
 
-    Optional<ServiceCategory> findByNameIgnoreCase(String name);
-
     boolean existsByNameIgnoreCase(String name);
 
     Page<ServiceCategory> findByActiveTrue(Pageable pageable);

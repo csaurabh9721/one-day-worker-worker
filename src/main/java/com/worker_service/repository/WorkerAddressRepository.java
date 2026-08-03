@@ -11,15 +11,4 @@ public interface WorkerAddressRepository
         extends JpaRepository<WorkerAddress, Long> {
 
     List<WorkerAddress> findByWorkerId(Long workerId);
-
-    List<WorkerAddress> findByWorkerIdAndActiveTrue(Long workerId);
-
-    Optional<WorkerAddress> findByWorkerIdAndPrimaryAddressTrue(
-            Long workerId
-    );
-
-    boolean existsByWorkerIdAndAddressType(
-            Long workerId,
-            AddressType addressType
-    );
 }

@@ -11,12 +11,11 @@ import com.worker_service.mapper.WorkerAddressMapper;
 import com.worker_service.repository.WorkerAddressRepository;
 import com.worker_service.repository.WorkerRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@org.springframework.stereotype.Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class WorkerAddressServiceImpl

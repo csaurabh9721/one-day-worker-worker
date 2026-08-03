@@ -11,6 +11,12 @@ import java.time.LocalDate;
 @Entity
 @Table(
         name = "workers",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_worker_identity",
+                        columnNames = "identity_id"
+                )
+        },
         indexes = {
                 @Index(
                         name = "idx_worker_identity_id",
@@ -23,9 +29,14 @@ import java.time.LocalDate;
                 @Index(
                         name = "idx_worker_availability",
                         columnList = "availability_status"
+                ),
+                @Index(
+                        name = "idx_worker_identity",
+                        columnList = "identity_id"
                 )
         }
 )
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -60,19 +71,18 @@ public class Worker extends BaseEntity {
     private String profileImageUrl;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 30)
+    @Column( length = 30)
     private Gender gender;
 
     private LocalDate dateOfBirth;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 30)
+    @Column( length = 30)
     private WorkerStatus status;
 
     @Enumerated(EnumType.STRING)
     @Column(
             name = "availability_status",
-            nullable = false,
             length = 30
     )
     private AvailabilityStatus availabilityStatus;
@@ -90,12 +100,9 @@ public class Worker extends BaseEntity {
     )
     private BigDecimal averageRating;
 
-    @Column(nullable = false)
     private Integer totalCompletedJobs = 0;
 
-    @Column(nullable = false)
     private Boolean profileVerified = false;
 
-    @Column(nullable = false)
     private Boolean active = true;
 }

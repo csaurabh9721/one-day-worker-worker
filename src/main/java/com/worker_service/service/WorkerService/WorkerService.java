@@ -10,8 +10,7 @@ import org.springframework.data.domain.Pageable;
 public interface WorkerService {
 
     WorkerResponse createWorker(
-            WorkerCreateRequest request,
-            Long identityId
+            WorkerCreateRequest request
     );
 
     WorkerResponse getWorkerById(

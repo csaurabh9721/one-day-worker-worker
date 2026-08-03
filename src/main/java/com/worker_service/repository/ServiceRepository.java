@@ -38,7 +38,6 @@ public interface ServiceRepository
             FROM Service s
             WHERE s.status = :status
               AND s.bookable = true
-              AND s.active = true
             """)
     Page<Service> findBookableServices(
             @Param("status") ServiceStatus status,
@@ -48,12 +47,9 @@ public interface ServiceRepository
     @Query("""
             SELECT s
             FROM Service s
-            WHERE s.active = true
-              AND (
-                    LOWER(s.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
+            WHERE   LOWER(s.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
                     OR LOWER(s.description)
                        LIKE LOWER(CONCAT('%', :keyword, '%'))
-                  )
             """)
     Page<Service> searchServices(
             @Param("keyword") String keyword,

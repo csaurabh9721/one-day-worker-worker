@@ -28,21 +28,12 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     @Transactional
     public WorkerResponse createWorker(
-            WorkerCreateRequest request,
-            Long identityId) {
+            WorkerCreateRequest request) {
 
-        if (repository.existsByIdentityId(identityId)) {
+        if (repository.existsByIdentityId(request.identityId())) {
             throw new DuplicateResourceException(
                     "Worker profile already exists for identity: "
-                            + identityId
-            );
-        }
-
-        if (request.email() != null
-                && repository.existsByEmailIgnoreCase(request.email())) {
-
-            throw new DuplicateResourceException(
-                    "Email already exists"
+                            + request.identityId()
             );
         }
 
@@ -56,7 +47,7 @@ public class WorkerServiceImpl implements WorkerService {
 
         Worker worker = mapper.toEntity(request);
 
-        worker.setIdentityId(identityId);
+        worker.setIdentityId(request.identityId());
         worker.setStatus(WorkerStatus.PENDING_VERIFICATION);
         worker.setAvailabilityStatus(AvailabilityStatus.OFFLINE);
         worker.setActive(true);
