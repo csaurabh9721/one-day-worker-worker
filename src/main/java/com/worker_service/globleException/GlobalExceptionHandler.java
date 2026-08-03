@@ -1,7 +1,5 @@
 package com.worker_service.globleException;
 
-import com.worker_service.dto.ApiResponse;
-import com.worker_service.globleException.WorkerNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +21,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(WorkerNotFoundException.class)
-    public ResponseEntity<ApiResponse<String>> handleworkerNotFound(WorkerNotFoundException ex) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ApiResponse<String>> handleworkerNotFound(ResourceNotFoundException ex) {
         ApiResponse<String> response = new ApiResponse<>(HttpStatus.NOT_FOUND.value(), ex.getMessage(), "Not Found");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
@@ -43,5 +41,10 @@ public class GlobalExceptionHandler {
         }
         ApiResponse<String> response = new ApiResponse<>(HttpStatus.BAD_REQUEST.value(), message, "Failed to register");
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<ApiResponse<String>> handleDuplicateResource(DuplicateResourceException ex) {
+        ApiResponse<String> response = new ApiResponse<>(HttpStatus.CONFLICT.value(), ex.getMessage(), "Conflict");
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 }

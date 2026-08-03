@@ -1,38 +1,50 @@
 package com.worker_service.entity;
-
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
+import lombok.*;
 
 @Entity
-@Data
 @Table(
-        name = "worker_skill",
+        name = "worker_skills",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"worker_id", "subcategory_id"})
+                @UniqueConstraint(
+                        name = "uk_worker_skill",
+                        columnNames = {
+                                "worker_id",
+                                "skill_id"
+                        }
+                )
         },
         indexes = {
-                @Index(name = "idx_subcategory", columnList = "subcategory_id")
+                @Index(
+                        name = "idx_worker_skill_worker",
+                        columnList = "worker_id"
+                ),
+                @Index(
+                        name = "idx_worker_skill_skill",
+                        columnList = "skill_id"
+                )
         }
 )
-public class WorkerSkill {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class WorkerSkill extends BaseEntity {
 
-    @ManyToOne
-    @JoinColumn(name = "worker_id", nullable = false)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(
+            name = "worker_id",
+            nullable = false
+    )
     private Worker worker;
 
-    @ManyToOne
-    @JoinColumn(name = "subcategory_id", nullable = false)
-    private SubCategory subCategory;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(
+            name = "skill_id",
+            nullable = false
+    )
+    private Skill skill;
 
     private Integer experienceYears;
-    private Double hourlyRate;
-    private Double fullDayRate;
 }
