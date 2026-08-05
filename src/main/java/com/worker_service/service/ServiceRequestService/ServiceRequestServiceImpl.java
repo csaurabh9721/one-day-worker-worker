@@ -5,7 +5,7 @@ import com.worker_service.dto.common.PageResponse;
 import com.worker_service.dto.servicerequest.ServiceRequestCreateRequest;
 import com.worker_service.dto.servicerequest.ServiceRequestResponse;
 import com.worker_service.dto.servicerequest.ServiceRequestReviewRequest;
-import com.worker_service.entity.ServiceRequest;
+import com.worker_service.entity.serviceEntities.ServiceRequest;
 import com.worker_service.entity.Worker;
 import com.worker_service.enums.ServiceRequestStatus;
 import com.worker_service.globleException.DuplicateResourceException;

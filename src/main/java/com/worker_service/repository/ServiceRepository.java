@@ -1,6 +1,6 @@
 package com.worker_service.repository;
 
-import com.worker_service.entity.Service;
+import com.worker_service.entity.serviceEntities.Service;
 import com.worker_service.enums.ServiceStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,12 +22,12 @@ public interface ServiceRepository
             Pageable pageable
     );
 
-    Page<Service> findByCategoryId(
+    Page<Service> findBySubcategoryId(
             Long categoryId,
             Pageable pageable
     );
 
-    Page<Service> findByCategoryIdAndStatus(
+    Page<Service> findBySubcategoryIdAndStatus(
             Long categoryId,
             ServiceStatus status,
             Pageable pageable

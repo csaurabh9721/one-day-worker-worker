@@ -3,7 +3,7 @@ package com.worker_service.mapper;
 import com.worker_service.dto.servicecategory.ServiceCategoryCreateRequest;
 import com.worker_service.dto.servicecategory.ServiceCategoryResponse;
 import com.worker_service.dto.servicecategory.ServiceCategoryUpdateRequest;
-import com.worker_service.entity.ServiceCategory;
+import com.worker_service.entity.serviceEntities.ServiceCategory;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -35,6 +35,7 @@ public class ServiceCategoryMapper {
         return new ServiceCategoryResponse(
                 category.getId(),
                 category.getName(),
+                category.getName().split(" ")[0],
                 category.getDescription(),
                 category.getIconUrl(),
                 category.getActive()

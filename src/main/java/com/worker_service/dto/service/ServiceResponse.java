@@ -10,9 +10,9 @@ public record ServiceResponse(
 
         String description,
 
-        Long categoryId,
+        Long subCategoryId,
 
-        String categoryName,
+        String subCategoryName,
 
         String iconUrl,
 

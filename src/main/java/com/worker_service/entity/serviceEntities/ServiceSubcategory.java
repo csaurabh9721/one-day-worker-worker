@@ -1,22 +1,24 @@
-package com.worker_service.entity;
+package com.worker_service.entity.serviceEntities;
+
+import com.worker_service.entity.BaseEntity;
 import com.worker_service.enums.ServiceStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Table(
-        name = "services",
+        name = "service_subcategories",
         indexes = {
                 @Index(
-                        name = "idx_service_name",
+                        name = "idx_subcategory_name",
                         columnList = "name"
                 ),
                 @Index(
-                        name = "idx_service_category",
+                        name = "idx_subcategory_category",
                         columnList = "category_id"
                 ),
                 @Index(
-                        name = "idx_service_status",
+                        name = "idx_subcategory_status",
                         columnList = "status"
                 )
         }
@@ -26,11 +28,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Service extends BaseEntity {
+public class ServiceSubcategory extends BaseEntity {
 
     @Column(
             nullable = false,
-            unique = true,
             length = 150
     )
     private String name;
@@ -51,16 +52,4 @@ public class Service extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
     private ServiceStatus status;
-
-    /**
-     * Can customer directly book this service?
-     */
-    @Column(nullable = false)
-    private Boolean bookable = true;
-
-    /**
-     * Can worker select this service?
-     */
-    @Column(nullable = false)
-    private Boolean workerSelectable = true;
 }

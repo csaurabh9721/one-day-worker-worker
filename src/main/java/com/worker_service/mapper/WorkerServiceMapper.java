@@ -3,7 +3,7 @@ package com.worker_service.mapper;
 import com.worker_service.dto.workerservice.WorkerServiceCreateRequest;
 import com.worker_service.dto.workerservice.WorkerServiceResponse;
 import com.worker_service.dto.workerservice.WorkerServiceUpdateRequest;
-import com.worker_service.entity.WorkerService;
+import com.worker_service.entity.serviceEntities.WorkerService;
 import org.springframework.stereotype.Component;
 
 @Component

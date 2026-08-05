@@ -14,7 +14,7 @@ public record ServiceCreateRequest(
         String description,
 
         @NotNull
-        Long categoryId,
+        Long subCategoryId,
 
         @Size(max = 500)
         String iconUrl,

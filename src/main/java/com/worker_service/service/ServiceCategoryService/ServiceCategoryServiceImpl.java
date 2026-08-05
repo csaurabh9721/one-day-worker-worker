@@ -4,7 +4,7 @@ import com.worker_service.dto.common.PageResponse;
 import com.worker_service.dto.servicecategory.ServiceCategoryCreateRequest;
 import com.worker_service.dto.servicecategory.ServiceCategoryResponse;
 import com.worker_service.dto.servicecategory.ServiceCategoryUpdateRequest;
-import com.worker_service.entity.ServiceCategory;
+import com.worker_service.entity.serviceEntities.ServiceCategory;
 import com.worker_service.globleException.DuplicateResourceException;
 import com.worker_service.globleException.ResourceNotFoundException;
 import com.worker_service.mapper.ServiceCategoryMapper;

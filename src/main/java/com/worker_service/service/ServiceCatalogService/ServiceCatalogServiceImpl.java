@@ -13,7 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import com.worker_service.mapper.ServiceMapper ;
-import com.worker_service.entity.Service ;
+import com.worker_service.entity.serviceEntities.Service;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
@@ -64,7 +64,7 @@ public class ServiceCatalogServiceImpl
         Page<Service> page;
 
         if (categoryId != null) {
-            page = repository.findByCategoryId(
+            page = repository.findBySubcategoryId(
                     categoryId,
                     pageable
             );

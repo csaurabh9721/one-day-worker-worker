@@ -2,7 +2,7 @@ package com.worker_service.mapper;
 
 import com.worker_service.dto.servicerequest.ServiceRequestCreateRequest;
 import com.worker_service.dto.servicerequest.ServiceRequestResponse;
-import com.worker_service.entity.ServiceRequest;
+import com.worker_service.entity.serviceEntities.ServiceRequest;
 import org.springframework.stereotype.Component;
 
 @Component

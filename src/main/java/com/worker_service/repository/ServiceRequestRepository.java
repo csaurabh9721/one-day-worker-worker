@@ -1,6 +1,6 @@
 package com.worker_service.repository;
 
-import com.worker_service.entity.ServiceRequest;
+import com.worker_service.entity.serviceEntities.ServiceRequest;
 import com.worker_service.enums.ServiceRequestStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,5 +1,7 @@
-package com.worker_service.entity;
+package com.worker_service.entity.serviceEntities;
 
+import com.worker_service.entity.BaseEntity;
+import com.worker_service.entity.Worker;
 import com.worker_service.enums.ServiceRequestStatus;
 import jakarta.persistence.*;
 import lombok.*;

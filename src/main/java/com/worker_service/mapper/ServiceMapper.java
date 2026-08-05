@@ -2,7 +2,7 @@ package com.worker_service.mapper;
 import com.worker_service.dto.service.ServiceCreateRequest;
 import com.worker_service.dto.service.ServiceResponse;
 import com.worker_service.dto.service.ServiceUpdateRequest;
-import com.worker_service.entity.Service;
+import com.worker_service.entity.serviceEntities.Service;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -34,9 +34,9 @@ public class ServiceMapper {
                 service.getId(),
                 service.getName(),
                 service.getDescription(),
-                service.getCategory().getId(),
-                service.getCategory().getName(),
-                service.getCategory().getIconUrl(),
+                service.getSubcategory().getId(),
+                service.getSubcategory().getName(),
+                service.getSubcategory().getIconUrl(),
                 service.getStatus(),
                 service.getBookable(),
                 service.getWorkerSelectable()

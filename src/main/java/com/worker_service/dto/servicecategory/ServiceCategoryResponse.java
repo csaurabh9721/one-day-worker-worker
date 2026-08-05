@@ -6,6 +6,8 @@ public record ServiceCategoryResponse(
 
         String name,
 
+        String shortForm,
+
         String description,
 
         String iconUrl,

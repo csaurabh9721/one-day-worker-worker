@@ -1,4 +1,5 @@
-package com.worker_service.entity;
+package com.worker_service.entity.serviceEntities;
+import com.worker_service.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
