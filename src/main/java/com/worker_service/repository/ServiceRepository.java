@@ -23,12 +23,12 @@ public interface ServiceRepository
     );
 
     Page<Service> findBySubcategoryId(
-            Long categoryId,
+            Long subcategoryId,
             Pageable pageable
     );
 
     Page<Service> findBySubcategoryIdAndStatus(
-            Long categoryId,
+            Long subcategoryId,
             ServiceStatus status,
             Pageable pageable
     );
